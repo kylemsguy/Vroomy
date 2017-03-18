@@ -5,6 +5,7 @@ declare var navigator : any;
 export class Accelerometer 
 {
     db : Storage;
+    recording : boolean = false;
     constructor() {
         if(!navigator.accelerometer){
             throw "Operation not supported.";
@@ -12,7 +13,16 @@ export class Accelerometer
 
         // set up database
         this.db = new Storage();
+    }
 
+
+    private addDataPoint(acceleration: any) 
+    {
+        this.db.addObject(acceleration);
+        console.log(JSON.stringify(acceleration));
+    }
+
+    startRecording(){
         // set up accelerometer callback
         navigator.accelerometer.watchAcceleration(
             (acceleration) => {
@@ -27,11 +37,8 @@ export class Accelerometer
         );
     }
 
+    getAllDataPoints(){
 
-    private addDataPoint(acceleration: any) 
-    {
-        this.db.addObject(acceleration);
-        console.log(JSON.stringify(acceleration));
     }
 
 
@@ -46,5 +53,7 @@ export class Accelerometer
         if(!end_time) {
             end_time = Math.floor(Date.now() / 1000);
         }
+
+        
     }
 }

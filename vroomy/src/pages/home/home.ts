@@ -10,34 +10,59 @@ declare var navigator : any;
 })
 export class HomePage {
 
-    currentAccel : any = {
-        x: NaN,
-        y: NaN,
-        z: NaN,
-        timestamp: "Failed."
-    };
+    currentAccelArray : Array<any> = []
+
+    timestamp : number = NaN;
 
     constructor(public navCtrl: NavController) {
-        navigator.accelerometer.getCurrentAcceleration(
-            (acceleration) => {
-                this.currentAccel = acceleration;
-            },
-            () => {
-                console.log("Failed to get current acceleration");
-            },
-        );
+        if(navigator.accelerometer){
+            navigator.accelerometer.watchAcceleration(
+                (acceleration) => {
+                    this.updateRunningAverage(acceleration);
+                    this.timestamp = acceleration.timestamp;
+                },
+                () => {
+                    console.log("Failed to get current acceleration");
+                },
+                {
+                    frequency: 100
+                }
+            );
+        }
+    }
 
-        navigator.accelerometer.watchAcceleration(
-            (acceleration) => {
-                this.currentAccel = acceleration;
-            },
-            () => {
-                console.log("Failed to get current acceleration");
-            },
-            {
-                frequency: 100
-            }
-        );
+    updateRunningAverage = (accel) => {
+        if(this.currentAccelArray.length >= 100){
+            this.currentAccelArray.shift();
+        }
+        this.currentAccelArray.push(accel);
+    }
+
+    getAccelRunningAvgX = () => {
+        if(this.currentAccelArray.length == 0){
+            return NaN;
+        }
+        return this.currentAccelArray.reduce((acc, val) => {
+            return acc + val.x;
+        }, 0) / this.currentAccelArray.length;
+    }
+
+    getAccelRunningAvgY = () => {
+        if(this.currentAccelArray.length == 0){
+            return NaN;
+        }
+        return this.currentAccelArray.reduce((acc, val) => {
+            return acc + val.y;
+        }, 0) / this.currentAccelArray.length;
+    }
+
+    getAccelRunningAvgZ = () => {
+        if(this.currentAccelArray.length == 0){
+            return NaN;
+        }
+        return this.currentAccelArray.reduce((acc, val) => {
+            return acc + val.z;
+        }, 0) / this.currentAccelArray.length;
     }
 
 }

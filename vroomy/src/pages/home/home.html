@@ -17,9 +17,11 @@
 
     <h1>Current Acceleration</h1>
     <p>
-        x: {{currentAccel.x}}<br>
-        y: {{currentAccel.y}}<br>
-        z: {{currentAccel.z}}<br>
-        Timestamp: {{currentAccel.timestamp}}<br>
+        x: {{getAccelRunningAvgX()}}<br>
+        y: {{getAccelRunningAvgY()}}<br>
+        z: {{getAccelRunningAvgZ()}}<br>
+        Timestamp: {{timestamp}}<br>
+        <br>
+        Current array: {{JSON.stringify(currentAccelArray)}}
     </p>
 </ion-content>

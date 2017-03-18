@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
-
+import { Component, ViewChild } from '@angular/core';
+import { NavController } from 'ionic-angular';
+import { Chart } from 'chart.js';
 /*
   Generated class for the Accel page.
 
@@ -11,11 +11,7 @@ import { NavController, NavParams } from 'ionic-angular';
   selector: 'page-accel',
   templateUrl: 'accel.html'
 })
-export class AccelPage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) 
-  {
-  	
-  }
+export class AccelPage 
+{
 
 }

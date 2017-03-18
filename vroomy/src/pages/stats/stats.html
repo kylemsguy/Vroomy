@@ -1,12 +1,18 @@
 <ion-header>
-
   <ion-navbar>
-    <ion-title>Stats</ion-title>
+    <ion-title> Stats </ion-title>
   </ion-navbar>
-
 </ion-header>
 
-
-<ion-content padding>
-
+<ion-content>
+ 
+    <ion-card>
+      <ion-card-header>
+        {{ textAcceleration }}
+      </ion-card-header>
+      <ion-card-content>
+        <canvas #barCanvas></canvas>
+      </ion-card-content>
+    </ion-card>
+ 
 </ion-content>

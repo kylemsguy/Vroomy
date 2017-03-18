@@ -24,7 +24,7 @@ export class EntryPage {
 
 	];
 	inputQuestions = ["make", "model", "mileage", "age"]
-	makeId:number = 0;
+	makeId:number = -1;
 	selects: any[];
 	titleStyle: any;
 	forms: _form[];
@@ -37,7 +37,7 @@ export class EntryPage {
 	];
 	constructor(public navCtrl: NavController, public navParams: NavParams) 
 	{
-		var answers:{} = {model:"", make:""}; 
+		var answers:{} = {}; 
 		var makeChoices:string[] = [];
 		var modelChoices:string[] = [];
 
@@ -50,18 +50,10 @@ export class EntryPage {
 				this.formStyles[0]['background-color'] = "green";
 				modelChoices.push(answers['model']);
 			}
-		else
-			{
-				modelChoices.push('Select');
-			}
 		if (answers['make'] != undefined)
 			{
 				this.formStyles[1]['background-color'] = "grey"
 				makeChoices.push(answers['make']);
-			}
-		else
-			{
-				makeChoices.push('Select');
 			}
 		for (var i = 0; i < this.makes.length; i++)
 		{
@@ -76,10 +68,13 @@ export class EntryPage {
 				break;
 			}
 		}
-		for (var i = 0; i < this.makes[this.makeId].model.length; i++)
+		if (this.makeId >= 0)
 		{
-			if (answers['model'] != this.makes[this.makeId].model[i])
-			{modelChoices.push(this.makes[this.makeId].model[i]);}		
+		for (var i = 0; i < this.makes[this.makeId].model.length; i++)
+			{
+				if (answers['model'] != this.makes[this.makeId].model[i])
+				{modelChoices.push(this.makes[this.makeId].model[i]);}		
+			}
 		}
 		this.forms = 
 		[
@@ -119,20 +114,18 @@ export class EntryPage {
 					break;
 				}
 			}
-			var modelChoices:string[] = ['Select'];
+			var modelChoices:string[] = [];
 
 			for (var j = 0; j < this.makes[this.makeId].model.length; j++)
 			{
 				modelChoices.push(this.makes[this.makeId].model[j]);
 			}	
 			this.forms[1].choices = modelChoices;
-			this.forms[0].choices.splice(0, 1)
 			localStorage.setItem("make", option);
 			localStorage.setItem("model", "");
 		}
 		if (form === this.forms[1])
 		{
-			this.forms[1].choices.splice(0, 1);
 			this.formStyles[1]['background-color'] = "grey"
 			form.answer = option;
 			localStorage.setItem("model", option);
@@ -189,9 +182,9 @@ export class EntryPage {
 		this.forms = 
 		[
 			{id: 0, question: "What is your car make?", choices: 
-			['Select', 'Toyota', 'Honda', 'GM'], answer:""},
+			['Toyota', 'Honda', 'GM'], answer:""},
 			{id: 1, question: "What is your car model?", choices: 
-			['Select'], answer:""}
+			[], answer:""}
 		]; 
 			
 		this.inputs = 

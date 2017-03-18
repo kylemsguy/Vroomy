@@ -47,12 +47,12 @@ export class EntryPage {
 		}
 		if (answers['model'] != undefined)
 			{
-				this.formStyles[0]['background-color'] = "green";
+				this.formStyles[0]['background-color'] = "#32db64";
 				modelChoices.push(answers['model']);
 			}
 		if (answers['make'] != undefined)
 			{
-				this.formStyles[1]['background-color'] = "grey"
+				this.formStyles[1]['background-color'] = "#eeeeee"
 				makeChoices.push(answers['make']);
 			}
 		for (var i = 0; i < this.makes.length; i++)

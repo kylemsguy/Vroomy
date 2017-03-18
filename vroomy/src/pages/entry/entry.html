@@ -12,9 +12,9 @@
     <div style="margin:3px" class="input-label">
       {{ form.question }}
     </div>
-    <select style="margin:3px">
+    <select style="margin:3px;width:95%;height:44px" (change)="setAnswerForm(form, $event.target.value)">
       <option value="" disabled selected>Select</option>
-      <option *ngFor="let option of form.choices;" (click) = "setAnswerForm(form, option)">{{option}}</option>
+      <option *ngFor="let option of form.choices;">{{option}}</option>
     </select>
   </label>
   </ion-item>
@@ -24,11 +24,11 @@
   <ion-item [ngStyle] = "inputStyles[i]">
   <label style="margin:4px"> {{ input.question }} </label><br>
   	<h3 style="color:red;margin:4px"> {{ warningInput[i] }} </h3>
-  	<input style="margin:4px" style="text-align:center;" type="text" [(ngModel)]="input.answer" 
-  	(change)="setAnswerInput(input)"><br>
+  	<input style="margin:4px" style="text-align:center;height:44px" type="text" [(ngModel)]="input.answer" 
+  	(change)="setAnswerInput(input)" type="number"><br>
   </ion-item>
   </div>
-  <div style="text-align:center">
+  <div style="text-align:center;margin:10px">
   <button ion-button block (click)="clearStorage()">Clear Data</button>
   </div>
   <button (click)="showAnswer()">SHOW</button>

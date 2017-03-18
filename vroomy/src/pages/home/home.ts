@@ -32,7 +32,7 @@ export class HomePage {
     }
 
     updateRunningAverage = (accel) => {
-        if(this.currentAccelArray.length >= 100){
+        if(this.currentAccelArray.length >= 10){
             this.currentAccelArray.shift();
         }
         this.currentAccelArray.push(accel);
@@ -63,6 +63,10 @@ export class HomePage {
         return this.currentAccelArray.reduce((acc, val) => {
             return acc + val.z;
         }, 0) / this.currentAccelArray.length;
+    }
+
+    debugGetStringifiedArray = () => {
+        return JSON.stringify(this.currentAccelArray)
     }
 
 }

@@ -1,18 +1,24 @@
 export class Storage {
+    public db: IDBDatabase;
+    private IndxDb: IDBFactory;    
 	private databaseName : string = 'accelDB';
 	private databaseVersion : number = 1;
 
 	constructor() {
-		createDatabase();
+        this.IndxDb = window.indexedDB;
+		this.createDatabase();
 	}
 
     private createDatabase(){
-        var db;
-        var openRequest = window.indexedDB.open(databaseName, databaseVersion);
+        var openRequest : IDBOpenDBRequest = this.IndxDb.open(this.databaseName, this.databaseVersion);
+
+        openRequest.onsuccess = (event : any) => {
+            this.db = event.target.result;
+        }
 
         openRequest.onerror = this.openDBError;
 
-        openRequest.onupgradeneeded = function (event) {
+        openRequest.onupgradeneeded = function (event : any) {
             // This is either a newly created database, ordatabaseVersion a new version number
             // has been submitted to the open() call.
             var db = event.target.result;
@@ -42,19 +48,19 @@ export class Storage {
     }
 
     addObject(obj){
-    	var db;
-        var openRequest = window.indexedDB.open(databaseName, databaseVersion);
+        var openRequest = window.indexedDB.open(this.databaseName, this.databaseVersion);
         
         openRequest.onerror = this.openDBError;
 
-        openRequest.onSuccess = (event) => {
+        openRequest.onsuccess = (event : any) => {
+            var db = event.target.result;
         	var acceldataStore = db.transaction('acceldata', 'readwrite').objectStore('acceldata');
         	var request = acceldataStore.add(obj);
         }
     }
 
-    private openDBError(event){
-        console.log(openRequest.errorCode);
+    private openDBError(event : any){
+        console.log("Failed to open database");
     }
 
 }

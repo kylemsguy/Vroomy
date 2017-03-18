@@ -13,6 +13,7 @@
       {{ form.question }}
     </div>
     <select style="margin:3px">
+      <option value="" disabled selected>Select</option>
       <option *ngFor="let option of form.choices;" (click) = "setAnswerForm(form, option)">{{option}}</option>
     </select>
   </label>

@@ -5,14 +5,42 @@
 </ion-header>
 
 <ion-content>
- 
+<ion-item>
+ <ion-select [ngModel]="selectedRunIndex" (ngModelChange)="selectRun($event)" style="width: 100% !important;max-width: 100% !important;">
+   <ion-option *ngFor="let run of runs; let i = index;" [value]="i" [selected]="selectedRunIndex == i">{{formatRunName(i)}}</ion-option>
+ </ion-select>
+</ion-item>
+<div *ngIf="selectedRun && selectedRun.length > 0">
+    <ion-card>
+      <ion-card-content>
+      You drove for {{(selectedRun[selectedRun.length-1].timestamp - selectedRun[0].timestamp)/1000}} seconds on {{formatRunName(selectedRunIndex)}}.
+      </ion-card-content>
+    </ion-card>
     <ion-card>
       <ion-card-header>
         {{ textAcceleration }}
       </ion-card-header>
       <ion-card-content>
-        <canvas #barCanvas></canvas>
+        <canvas baseChart chartType="line" [datasets]="accelChartDataSets" options="{scales: {
+            xAxes: [{
+                type: 'linear',
+                position: 'bottom'
+            }]
+          }
+        }"></canvas>
       </ion-card-content>
     </ion-card>
+    <ion-card>
+      <ion-card-header>
+        Statistics
+      </ion-card-header>
+      <ion-card-content>
+        <div style="font-weight: bold">Acceleration/Braking ratio: {{eventCount.cumulativeAccel - eventCount.cumulativeDecel}}</div>
+        <div>The larger the number, the more time the car spends coasting, which saves fuel. The optimal number is different for each car due to air resistance and friction: your car should average {{getOptimalAccelBrakingRatio()}}.</div>
+        <div style="font-weight: bold">{{eventCount.hardaccel.length}} hard acceleration events</div>
+        <div>Engines operate optimally in a certain range of power outputs: accelerating too quickly would use more fuel than necessary.</div>
+      </ion-card-content>
+    </ion-card>
+</div>
  
 </ion-content>

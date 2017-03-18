@@ -10,17 +10,34 @@ declare var navigator : any;
 })
 export class HomePage {
 
-	currentAccel: number;
+    currentAccel : any = {
+        x: NaN,
+        y: NaN,
+        z: NaN,
+        timestamp: "Failed."
+    };
 
     constructor(public navCtrl: NavController) {
-    	navigator.accelerometer.getCurrentAcceleration(
-    		(acceleration) => {
-    			this.currentAccel = acceleration;
-    		},
-    		() => {
-    			this.currentAccel = NaN;
-    		},
-    	);
+        navigator.accelerometer.getCurrentAcceleration(
+            (acceleration) => {
+                this.currentAccel = acceleration;
+            },
+            () => {
+                console.log("Failed to get current acceleration");
+            },
+        );
+
+        navigator.accelerometer.watchAcceleration(
+            (acceleration) => {
+                this.currentAccel = acceleration;
+            },
+            () => {
+                console.log("Failed to get current acceleration");
+            },
+            {
+                frequency: 100
+            }
+        );
     }
 
 }

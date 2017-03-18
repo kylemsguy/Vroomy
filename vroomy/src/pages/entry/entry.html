@@ -6,14 +6,23 @@
 
 <ion-content>
 	<ion-item [ngStyle]="titleStyle">
-  <label class="item item-input item-select" *ngFor="let form of forms">
+	<div *ngFor="let form of forms">
+  <label class="item item-input item-select" >
     <div class="input-label">
       {{ form.question }}
     </div>
     <select>
-      <option *ngFor="let option of form.choices; let i = index;" (click) = "setAnswer(form, option, i)">{{option}}</option>
+      <option *ngFor="let option of form.choices;" (click) = "setAnswerForm(form, option)">{{option}}</option>
     </select>
   </label>
+  </div>
+  </ion-item>
+  <ion-item>
+  <div *ngFor="let input of inputs;">
+  <label> {{ input.question }} </label>
+  	<input type="text" [(ngModel)]="input.answer" 
+  	(change)="setAnswerInput(input)">
+  </div>
   </ion-item>
   <button (click)="showAnswer()">SHOW</button>
 </ion-content>

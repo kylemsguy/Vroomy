@@ -104,7 +104,7 @@ export class EntryPage {
 	{
 		if (form === this.forms[0]) 
 		{
-			this.formStyles[0]['background-color'] = "green"
+			this.formStyles[0]['background-color'] = "#32db64"
 			form.answer = option;
 			for (var i = 0; i < this.makes.length; i++)
 			{
@@ -126,7 +126,7 @@ export class EntryPage {
 		}
 		if (form === this.forms[1])
 		{
-			this.formStyles[1]['background-color'] = "grey"
+			this.formStyles[1]['background-color'] = "#eeeeee"
 			form.answer = option;
 			localStorage.setItem("model", option);
 		}

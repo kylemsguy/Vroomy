@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title [ngStyle]="titleStyle">Forms</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+	<ion-item [ngStyle]="titleStyle">
+  <label class="item item-input item-select" *ngFor="let form of forms">
+    <div class="input-label">
+      {{ form.question }}
+    </div>
+    <select>
+      <option *ngFor="let option of form.choices; let i = index;" (click) = "setAnswer(form, option, i)">{{option}}</option>
+    </select>
+  </label>
+  </ion-item>
+  <button (click)="showAnswer()">SHOW</button>
+</ion-content>

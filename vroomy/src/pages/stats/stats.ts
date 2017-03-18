@@ -1,7 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Chart } from 'chart.js';
-
 /*
   Generated class for the Stats page.
 
@@ -16,6 +15,8 @@ export class StatsPage {
 	@ViewChild('barCanvas') barCanvas;
 	barChart;
 
+  infoInputed:boolean = true;
+  title = localStorage.getItem("make") + " " + localStorage.getItem("model");
 	textAcceleration:string = "Acceleration Data";
 
   	constructor(public navCtrl: NavController) 

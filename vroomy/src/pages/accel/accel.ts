@@ -1,8 +1,6 @@
 
 import { Component, ViewChild } from '@angular/core';
-import { NavController } from 'ionic-angular';
 import { Chart } from 'chart.js';
-import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Accelerometer } from '../../app/accelerometer';
 /*
@@ -27,6 +25,5 @@ export class AccelPage {
             console.log(err);
         }
     }
->>>>>>> origin/accel
 
 }

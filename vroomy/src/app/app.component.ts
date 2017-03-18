@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Platform } from 'ionic-angular';
-import { StatusBar, Splashscreen } from 'ionic-native';
-
+import { StatusBar, Splashscreen, Keyboard} from 'ionic-native';
 import { TabsPage } from '../pages/tabs/tabs';
 
 
@@ -17,6 +16,13 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       StatusBar.styleDefault();
       Splashscreen.hide();
+      Keyboard.onKeyboardShow().subscribe(() => {
+                document.body.classList.add('keyboard-is-open');
+            });
+
+      Keyboard.onKeyboardHide().subscribe(() => {
+                document.body.classList.remove('keyboard-is-open');
+            });
     });
   }
 }

@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title [ngStyle]="titleStyle">Forms</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+	
+	<div *ngFor="let form of forms; let i = index">
+	<ion-item [ngStyle]="formStyles[i]">
+  <label class="item item-input item-select" >
+    <div style="margin:3px" class="input-label">
+      {{ form.question }}
+    </div>
+    <select style="margin:3px">
+      <option *ngFor="let option of form.choices;" (click) = "setAnswerForm(form, option)">{{option}}</option>
+    </select>
+  </label>
+  </ion-item>
+  </div>
+
+  <div *ngFor="let input of inputs;let i = index">  
+  <ion-item [ngStyle] = "inputStyles[i]">
+  <label style="margin:4px"> {{ input.question }} </label><br>
+  	<h3 style="color:red;margin:4px"> {{ warningInput[i] }} </h3>
+  	<input style="margin:4px" style="text-align:center;" type="text" [(ngModel)]="input.answer" 
+  	(change)="setAnswerInput(input)"><br>
+  </ion-item>
+  </div>
+  <div style="text-align:center">
+  <button ion-button block (click)="clearStorage()">Clear Data</button>
+  </div>
+  <button (click)="showAnswer()">SHOW</button>
+</ion-content>

@@ -47,13 +47,13 @@ export class Storage {
         };
     }
 
-    addObject(obj : any){
+    addObject2(obj : any){
     	var acceldataStore = this.db.transaction('acceldata', 'readwrite').objectStore('acceldata');
     	var request = acceldataStore.add(obj);
     }
 
-    addObject2(obj : any){
-        // use only if addObject doesn't work
+    addObject(obj : any){
+        // use only if addObject2 doesn't work
         var openRequest = this.IndxDb.open(this.databaseName, this.databaseVersion);
         
         openRequest.onerror = this.openDBError;

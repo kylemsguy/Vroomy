@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-//import { Accelerometer } from '../../app/accelerometer'
+import { Accelerometer } from '../../app/accelerometer'
 
 function segmentRuns(indata: any[]) : Array<any>[] {
     let out = [];
@@ -37,8 +37,24 @@ function countEvents(indata) {
 }
 
 function eventsToChart(events) {
-    return events.map(a=>{return {x: a.timestamp, y: a.z}});
+    const divid = 20;
+    let outarr= new Array(Math.floor(events.length / divid));
+    for (let i = 0; i < outarr.length; i++) {
+        let a = events[i*divid];
+        outarr[i] = {x: (a.timestamp-events[0].timestamp)/1000, y: a.z};
+    }
+    return outarr;
+    //return events.map(a=>{return {x: (a.timestamp-events[0].timestamp)/1000, y: a.z}});
 }
+
+const brakingRatios = {
+    "F1-50": 2.1,
+    "Rav4": 1.7,
+    "Corolla": 1.2,
+    "Accord": 1.4,
+    "Malibu": 1.3,
+    "Civic": 1.2
+};
 
 /*
   Generated class for the Stats page.
@@ -67,11 +83,10 @@ export class StatsPage {
     }
 
     ionViewWillEnter() {
-        //accelService.getAllDataPoints().then(runsData => {
-let runsData = [{timestamp: 0, z: 0}, {timestamp: 1, z: 9}, {timestamp: 2, z: 5}, {timestamp: 100000, z: 0}, {timestamp: 100001, z: 5}, {timestamp: 100002, z: 5}];
+        Accelerometer.getInstance().getAllDataPoints().then((runsData : any[]) => {
             this.runs = segmentRuns(runsData);
             if (!this.selectedRun) this.selectRun(0);
-        //};
+        });
     }
     formatRunName(run) {
         if (!this.runs[run]) return "WHAT";
@@ -86,7 +101,7 @@ console.log(this.accelChartDataSets);
     }
 
     getOptimalAccelBrakingRatio() {
-        return "1.0";
+        return localStorage["model"]? brakingRatios[localStorage["model"]] : 1;
     }
 }
 

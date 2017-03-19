@@ -96,7 +96,7 @@ export class Storage {
         var trans : IDBTransaction = this.db.transaction('acceldata');
         var store : IDBObjectStore = trans.objectStore('acceldata');
         var request = store.openCursor(range);
-        var entries = [];
+        var entries : Array<any> = [];
 
         var promise = new Promise((callback) => {
             trans.oncomplete = () => {

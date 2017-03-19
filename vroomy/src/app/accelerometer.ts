@@ -8,6 +8,7 @@ export class Accelerometer
     recording : boolean = false;
 
     private watchID;
+    private cachedAccelerations : Array<any> = [];
 
     private static _instance : Accelerometer;
 
@@ -35,9 +36,21 @@ export class Accelerometer
     protected addDataPoint(acceleration: any) 
     {
         this.db.addObject(acceleration);
+        this.addToCache(acceleration);
 
         // TODO implement pruning
         //console.log(JSON.stringify(acceleration));
+    }
+
+    private addToCache(acceleration: any){
+        if(this.cachedAccelerations.length >= 100){
+            this.cachedAccelerations.shift();
+        }
+        this.cachedAccelerations.push(acceleration);
+    }
+
+    getCached(){
+        return this.cachedAccelerations;
     }
 
     startRecording(){
@@ -45,9 +58,11 @@ export class Accelerometer
             throw "Operation not supported.";
         }
         // set up accelerometer callback
+        console.log('adding callback');
         this.watchID = navigator.accelerometer.watchAcceleration(
             (acceleration) => {
                 this.addDataPoint(acceleration);
+                console.log('adding', acceleration);
             },
             () => {
                 console.log("Failed to get current acceleration");
@@ -76,7 +91,7 @@ export class Accelerometer
     getDataPoints(start_time: number, end_time: number) 
     {
         if(!end_time) {
-            end_time = Math.floor(Date.now() / 1000);
+            end_time = Math.floor(Date.now());
         }
 
         return this.db.getObjectTimestampRange(start_time, end_time);

@@ -5,6 +5,10 @@ declare var navigator : any;
 export class Accelerometer 
 {
     db : Storage;
+    recording : boolean = false;
+
+    private watchID;
+
     constructor() {
         if(!navigator.accelerometer){
             throw "Operation not supported.";
@@ -12,9 +16,20 @@ export class Accelerometer
 
         // set up database
         this.db = new Storage();
+    }
 
+
+    private addDataPoint(acceleration: any) 
+    {
+        this.db.addObject(acceleration);
+
+        // TODO implement pruning
+        //console.log(JSON.stringify(acceleration));
+    }
+
+    startRecording(){
         // set up accelerometer callback
-        navigator.accelerometer.watchAcceleration(
+        this.watchID = navigator.accelerometer.watchAcceleration(
             (acceleration) => {
                 this.addDataPoint(acceleration);
             },
@@ -27,11 +42,12 @@ export class Accelerometer
         );
     }
 
+    stopRecording(){
+        navigator.accelerometer.clearWatch(this.watchID);
+    }
 
-    private addDataPoint(acceleration: any) 
-    {
-        this.db.addObject(acceleration);
-        console.log(JSON.stringify(acceleration));
+    getAllDataPoints(){
+        return db.getAllObjects();
     }
 
 
@@ -39,12 +55,14 @@ export class Accelerometer
      * Returns data points between start_time and end_time
      * @param start_time: Start UNIX timestamp
      * @param end_time: End UNIX timestamp; defaults to now
-     * @return array of data points
+     * @return Promise to return data
      */
     getDataPoints(start_time: number, end_time: number) 
     {
         if(!end_time) {
             end_time = Math.floor(Date.now() / 1000);
         }
+
+        return db.getObjectTimestampRange(start_time, end_time);
     }
 }

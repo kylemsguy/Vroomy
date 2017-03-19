@@ -24,6 +24,7 @@ export class AccelPage {
         } catch(err) {
             console.log(err);
         }
+        this.accel.startRecording();
     }
 
 }

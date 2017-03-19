@@ -47,16 +47,75 @@ export class Storage {
         };
     }
 
-    addObject(obj){
-        var openRequest = window.indexedDB.open(this.databaseName, this.databaseVersion);
+    addObject(obj : any){
+    	var acceldataStore = this.db.transaction('acceldata', 'readwrite').objectStore('acceldata');
+    	var request = acceldataStore.add(obj);
+    }
+
+    addObject2(obj : any){
+        // use only if addObject doesn't work
+        var openRequest = this.IndxDb.open(this.databaseName, this.databaseVersion);
         
         openRequest.onerror = this.openDBError;
 
         openRequest.onsuccess = (event : any) => {
             var db = event.target.result;
-        	var acceldataStore = db.transaction('acceldata', 'readwrite').objectStore('acceldata');
-        	var request = acceldataStore.add(obj);
+            var acceldataStore = db.transaction('acceldata', 'readwrite').objectStore('acceldata');
+            var request = acceldataStore.add(obj);
         }
+    }
+
+    getAllObjects(){
+        var trans : IDBTransaction = this.db.transaction('acceldata');
+        var store : IDBObjectStore = trans.objectStore('acceldata');
+        var request = store.openCursor();
+        var entries = [];
+
+        var promise = new Promise((callback) => {
+            trans.oncomplete = () => {
+                callback(entries);
+            }
+        });
+
+        request.onsuccess = (evt : any) => {
+            var cursor = evt.target.result;
+            if (cursor) {
+                var point = cursor.value;
+
+                entries.push(point);
+                
+                cursor.continue();
+            }
+        };
+
+        return promise;
+    }
+
+    getObjectTimestampRange(start_time : number, end_time : number){
+        var range : IDBKeyRange = IDBKeyRange.bound(start_time, end_time);
+        var trans : IDBTransaction = this.db.transaction('acceldata');
+        var store : IDBObjectStore = trans.objectStore('acceldata');
+        var request = store.openCursor(range);
+        var entries = [];
+
+        var promise = new Promise((callback) => {
+            trans.oncomplete = () => {
+                callback(entries);
+            }
+        });
+
+        request.onsuccess = (evt : any) => {
+            var cursor = evt.target.result;
+            if (cursor) {
+                var point = cursor.value;
+
+                entries.push(point);
+                
+                cursor.continue();
+            }
+        };
+
+        return promise;
     }
 
     private openDBError(event : any){

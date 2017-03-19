@@ -23,18 +23,39 @@ export class AccelPage {
     {
      this.loaded = false;
      try {
-            this.accel = Accelerometer.getInstance();
-            
-         } catch(err) {}    
+           this.accel = Accelerometer.getInstance();
+         } catch(err) {alert(err);}    
      this.goStop = "Start";
-     setInterval(() => 
+     setInterval(() =>
      {
-        if (this.barChart)
+         this.accel.getAllDataPoints().then((data: Array<any>) =>
             {
-            this.barChart.data.datasets[0].data = [7, 5, 6, 3];
-            this.barChart.update();
+                console.log(data[0].x);
+                alert(data[0].x);
             }
-        }, 5000);
+     )}, 100);
+
+     //----------------------
+     // Just 
+     //-----------------------
+
+     // setInterval(() => 
+     // {
+     //    if (this.barChart)
+     //        {
+     //        var now = Date.now()/1000;
+     //        this.accel.getDataPoints(now - 5000, now).then((data: Array<any>) =>
+     //        {
+     //            var accelObjs = [];
+     //            for (var i = 0; i < data.length; i++)
+     //            {
+     //                accelObjs[i] = data[i];
+     //            }
+     //            this.barChart.data.datasets[0].data = accelObjs;
+     //            this.barChart.update();
+     //        });
+     //        }
+     //    }, 5000);
     }
 
     chartData;
@@ -73,7 +94,6 @@ export class AccelPage {
                     }]
                 }
             }
-
     });
     }
     onStart = () =>
@@ -89,7 +109,4 @@ export class AccelPage {
                 try{this.accel.stopRecording();} catch (err) {}  
             }
         }
-
-
-    
 }

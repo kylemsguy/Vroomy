@@ -5,6 +5,9 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { StatsPage } from '../pages/stats/stats';
 import { EntryPage } from '../pages/entry/entry';
 import { AccelPage } from '../pages/accel/accel';
+import { ChartsModule } from 'ng2-charts';
+import { Chart } from 'chart.js'
+Chart;
 @NgModule({
   declarations: [
     MyApp,
@@ -14,7 +17,8 @@ import { AccelPage } from '../pages/accel/accel';
     AccelPage
   ],
   imports: [
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    ChartsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

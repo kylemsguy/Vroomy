@@ -45,9 +45,11 @@ export class Accelerometer
             throw "Operation not supported.";
         }
         // set up accelerometer callback
+        console.log('adding callback');
         this.watchID = navigator.accelerometer.watchAcceleration(
             (acceleration) => {
                 this.addDataPoint(acceleration);
+                console.log('adding', acceleration);
             },
             () => {
                 console.log("Failed to get current acceleration");

@@ -27,38 +27,38 @@ export class AccelPage {
            this.accel = Accelerometer.getInstance();
          } catch(err) {alert(err);}    
      this.goStop = "Start";
-     setInterval(() =>
-     {
-         this.accel.getAllDataPoints().then((data: Array<any>) =>
-            {
-                console.log("All data points", data[0].x);
-                //alert(data[0].x);
-            }
-     )}, 100);
-
-     alert('asdfasdf');
+     // setInterval(() =>
+     // {
+     //     this.accel.getAllDataPoints().then((data: Array<any>) =>
+     //        {
+     //            console.log("All data points", data[0].x);
+     //            //alert(data[0].x);
+     //        }
+     // )}, 1000);
 
      //----------------------
      // Just 
      //-----------------------
 
-     // setInterval(() => 
-     // {
-     //    if (this.barChart)
-     //        {
-     //        var now = Date.now()/1000;
-     //        this.accel.getDataPoints(now - 5000, now).then((data: Array<any>) =>
-     //        {
-     //            var accelObjs = [];
-     //            for (var i = 0; i < data.length; i++)
-     //            {
-     //                accelObjs[i] = data[i];
-     //            }
-     //            this.barChart.data.datasets[0].data = accelObjs;
-     //            this.barChart.update();
-     //        });
-     //        }
-     //    }, 5000);
+     setInterval(() => 
+     {
+        if (this.barChart)
+            {
+            var now = Date.now();
+            console.log('Now requesting data points...');
+            this.accel.getDataPoints(now - 5000000, now).then((data: Array<any>) =>
+            {
+                console.log('1234', data);
+                var accelObjs = [];
+                for (var i = 0; i < data.length; i++)
+                {
+                    accelObjs[i] = data[i];
+                }
+                this.barChart.data.datasets[0].data = accelObjs;
+                this.barChart.update();
+            });5000000
+            }
+        }, 5000);
     }
 
     chartData;

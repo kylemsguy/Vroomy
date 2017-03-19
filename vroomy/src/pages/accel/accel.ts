@@ -48,6 +48,7 @@ export class AccelPage {
         {
             xLabel[i] = i;
         }
+
         this.barChart = new Chart(this.barCanvas.nativeElement, {
             type: 'line',
             data: {

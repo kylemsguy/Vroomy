@@ -22,7 +22,9 @@ export class Accelerometer
     private addDataPoint(acceleration: any) 
     {
         this.db.addObject(acceleration);
-        console.log(JSON.stringify(acceleration));
+
+        // TODO implement pruning
+        //console.log(JSON.stringify(acceleration));
     }
 
     startRecording(){

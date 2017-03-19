@@ -86,9 +86,9 @@ export class EntryPage {
 			
 		this.inputs = 
 		[
-			{id: 0, question: "How Much Mileage is on your Car?",
+			{id: 0, question: "How much mileage does your car get (l/100km)?",
 			 answer: (answers['mileage'] == undefined)?'':answers['mileage']},
-			 {id: 0, question: "How Old is your Car?",
+			 {id: 0, question: "How Old is your Car (yrs)?",
 			 answer: (answers['age'] == undefined)?'':answers['age']}
 		];
 
@@ -189,9 +189,9 @@ export class EntryPage {
 			
 		this.inputs = 
 		[
-			{id: 0, question: "How much mileage is on your car?",
+			{id: 0, question: "How much mileage does your car get (l/100km)?",
 			 answer: ""},
-			 {id: 1, question: "How old is your car?",
+			 {id: 1, question: "How old is your car (yrs)?",
 			 answer: ""}
 		];
 	

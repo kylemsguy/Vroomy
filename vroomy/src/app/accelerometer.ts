@@ -47,7 +47,7 @@ export class Accelerometer
     }
 
     getAllDataPoints(){
-        return db.getAllObjects();
+        return this.db.getAllObjects();
     }
 
 
@@ -63,6 +63,6 @@ export class Accelerometer
             end_time = Math.floor(Date.now() / 1000);
         }
 
-        return db.getObjectTimestampRange(start_time, end_time);
+        return this.db.getObjectTimestampRange(start_time, end_time);
     }
 }

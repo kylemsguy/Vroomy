@@ -2,7 +2,7 @@ import { Component} from '@angular/core';
 import { EntryPage } from '../entry/entry';
 import { StatsPage } from '../stats/stats';
 import { AccelPage } from '../accel/accel';
-import { NavController, Tabs } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 
 
 @Component({
@@ -20,7 +20,7 @@ export class TabsPage {
   	];
 
   }
-}
+}  
 
 interface _tab
 {

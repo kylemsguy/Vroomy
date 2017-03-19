@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="dark">
     <ion-title [ngStyle]="titleStyle">Forms</ion-title>
   </ion-navbar>
 </ion-header>
@@ -25,7 +25,7 @@
   <label style="margin:4px"> {{ input.question }} </label><br>
   	<h3 style="color:red;margin:4px"> {{ warningInput[i] }} </h3>
   	<input style="margin:4px" style="text-align:center;height:44px" type="text" [(ngModel)]="input.answer" 
-  	(change)="setAnswerInput(input)" type="number"><br>
+  	(change)="setAnswerInput(input)"><br>
   </ion-item>
   </div>
   <div style="text-align:center;margin:10px">

@@ -21,10 +21,12 @@ export class AccelPage {
     {
         try {
             this.accel = new Accelerometer();
+            this.accel.startRecording();
         } catch(err) {
             console.log(err);
+            alert("uhoh");
         }
-        this.accel.startRecording();
+        
     }
 
 }

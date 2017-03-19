@@ -24,12 +24,11 @@
   <ion-item [ngStyle] = "inputStyles[i]">
   <label style="margin:4px"> {{ input.question }} </label><br>
   	<h3 style="color:red;margin:4px"> {{ warningInput[i] }} </h3>
-  	<input style="margin:4px" style="text-align:center;height:44px" type="text" [(ngModel)]="input.answer" 
-  	(change)="setAnswerInput(input)"><br>
+  	<input style="margin:4px" style="text-align:center;height:39px" type="text" [(ngModel)]="input.answer" 
+  	(change)="setAnswerInput(input)"><p style="margin:4px">{{ units[i] }}</p>
   </ion-item>
   </div>
   <div style="text-align:center;margin:10px">
   <button ion-button block (click)="clearStorage()">Clear Data</button>
   </div>
-  <button (click)="showAnswer()">SHOW</button>
 </ion-content>

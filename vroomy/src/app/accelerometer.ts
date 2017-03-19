@@ -6,6 +6,9 @@ export class Accelerometer
 {
     db : Storage;
     recording : boolean = false;
+
+    private watchID;
+
     constructor() {
         if(!navigator.accelerometer){
             throw "Operation not supported.";
@@ -24,7 +27,7 @@ export class Accelerometer
 
     startRecording(){
         // set up accelerometer callback
-        navigator.accelerometer.watchAcceleration(
+        this.watchID = navigator.accelerometer.watchAcceleration(
             (acceleration) => {
                 this.addDataPoint(acceleration);
             },
@@ -35,6 +38,10 @@ export class Accelerometer
                 frequency: 100 // in ms
             }
         );
+    }
+
+    stopRecording(){
+        navigator.accelerometer.clearWatch(this.watchID);
     }
 
     getAllDataPoints(){

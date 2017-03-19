@@ -178,7 +178,17 @@ export class EntryPage {
 	clearStorage = () =>
 	{
 		localStorage.clear();
+		this.formStyles = 
+		[
+			{'text-align': 'center'},
+			{'text-align': 'center'}
+		];
+		this.inputStyles =
+		[
+			{'text-align': 'center'},
+			{'text-align': 'center'},
 
+		];
 		this.forms = 
 		[
 			{id: 0, question: "What is your car make?", choices: 

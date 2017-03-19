@@ -20,7 +20,7 @@ export class AccelPage {
     constructor(public navCtrl: NavController, public navParams: NavParams) 
     {
         try {
-            this.accel = new Accelerometer();
+            this.accel = Accelerometer.getInstance();
             this.accel.startRecording();
         } catch(err) {
             console.log("WOAH!!!");

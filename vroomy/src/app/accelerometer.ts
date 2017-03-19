@@ -9,13 +9,25 @@ export class Accelerometer
 
     private watchID;
 
+    private static _instance : Accelerometer = new Accelerometer();
+
     constructor() {
+        if(Accelerometer._instance){
+            throw new Error("Error: Instantiation failed: Use Accelerometer.getInstance() instead of new.");
+        }
+
         if(!navigator.accelerometer){
             throw "Operation not supported.";
         }
 
         // set up database
         this.db = new Storage();
+
+        Accelerometer._instance = this;
+    }
+
+    public static getInstance() : Accelerometer{
+        return Accelerometer._instance;
     }
 
 

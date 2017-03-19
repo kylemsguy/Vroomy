@@ -19,6 +19,7 @@ export class AccelPage {
     accel : Accelerometer;
     goStop:string ; 
     loaded:boolean;
+
     constructor(public navCtrl: NavController, public navParams: NavParams) 
     {
      this.loaded = false;
@@ -30,10 +31,12 @@ export class AccelPage {
      {
          this.accel.getAllDataPoints().then((data: Array<any>) =>
             {
-                console.log(data[0].x);
-                alert(data[0].x);
+                console.log("All data points", data[0].x);
+                //alert(data[0].x);
             }
      )}, 100);
+
+     alert('asdfasdf');
 
      //----------------------
      // Just 
@@ -62,8 +65,7 @@ export class AccelPage {
     chartLastIndex;
 
     ionViewDidLoad()
-      {
-        alert("hello");
+    {
         var xLabel = [];
         for (var i = 0; i < 51; i ++)
         {
@@ -94,19 +96,20 @@ export class AccelPage {
                     }]
                 }
             }
-    });
+        });
     }
+
     onStart = () =>
         {
             if (this.goStop == "Start")
             {
                 this.goStop = "Stop";
-                try{this.accel.startRecording();} catch (err) {}  
+                try{this.accel.startRecording();} catch (err) {console.log("Failed to start recording: ", err);}  
             }
             else 
             {
                 this.goStop = "Start";
-                try{this.accel.stopRecording();} catch (err) {}  
+                try{this.accel.stopRecording();} catch (err) {console.log("Failed to stopf recording: ", err);}  
             }
-        }
-}
+        }  
+    }

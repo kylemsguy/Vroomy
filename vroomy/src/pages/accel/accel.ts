@@ -23,8 +23,8 @@ export class AccelPage {
             this.accel = new Accelerometer();
             this.accel.startRecording();
         } catch(err) {
+            console.log("WOAH!!!");
             console.log(err);
-            alert("uhoh");
         }
         
     }

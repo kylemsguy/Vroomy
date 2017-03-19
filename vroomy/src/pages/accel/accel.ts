@@ -43,20 +43,27 @@ export class AccelPage {
      setInterval(() => 
      {
         if (this.barChart)
-            {
+        {
             var now = Date.now();
             console.log('Now requesting data points...');
-            this.accel.getDataPoints(now - 5000000, now).then((data: Array<any>) =>
+            // this.accel.getDataPoints(now - 5000000, now).then((data: Array<any>) =>
+            // {
+            //     var accelObjs = [];
+            //     for (var i = 0; i < data.length; i++)
+            //     {
+            //         accelObjs[i] = data[i];
+            //     }
+            //     this.barChart.data.datasets[0].data = accelObjs;
+            //     this.barChart.update();
+            // });
+            var accelObjs = [];
+            var data = this.accel.getCached();
+            for (var i = 0; i < data.length; i++)
             {
-                console.log('1234', data);
-                var accelObjs = [];
-                for (var i = 0; i < data.length; i++)
-                {
-                    accelObjs[i] = data[i];
-                }
-                this.barChart.data.datasets[0].data = accelObjs;
-                this.barChart.update();
-            });5000000
+                accelObjs[i] = data[i].z;
+            }
+            this.barChart.data.datasets[0].data = accelObjs;
+            this.barChart.update();
             }
         }, 5000);
     }

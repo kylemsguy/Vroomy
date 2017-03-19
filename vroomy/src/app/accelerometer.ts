@@ -9,29 +9,30 @@ export class Accelerometer
 
     private watchID;
 
-    private static _instance : Accelerometer = new Accelerometer();
+    private static _instance : Accelerometer;
 
     constructor() {
         if(Accelerometer._instance){
             throw new Error("Error: Instantiation failed: Use Accelerometer.getInstance() instead of new.");
         }
 
-        if(!navigator.accelerometer){
-            throw "Operation not supported.";
-        }
-
         // set up database
         this.db = new Storage();
 
-        Accelerometer._instance = this;
     }
 
     public static getInstance() : Accelerometer{
+        if (Accelerometer._instance) return Accelerometer._instance;
+        if (navigator.accelerometer) {
+            Accelerometer._instance = new Accelerometer();
+        } else {
+            Accelerometer._instance = new BrowserAccelerometer();
+        }
         return Accelerometer._instance;
     }
 
 
-    private addDataPoint(acceleration: any) 
+    protected addDataPoint(acceleration: any) 
     {
         this.db.addObject(acceleration);
 
@@ -40,6 +41,9 @@ export class Accelerometer
     }
 
     startRecording(){
+        if(!navigator.accelerometer){
+            throw "Operation not supported.";
+        }
         // set up accelerometer callback
         this.watchID = navigator.accelerometer.watchAcceleration(
             (acceleration) => {
@@ -78,3 +82,20 @@ export class Accelerometer
         return this.db.getObjectTimestampRange(start_time, end_time);
     }
 }
+
+export class BrowserAccelerometer extends Accelerometer {
+    bindMe = this.handleEvent.bind(this);
+    startRecording() {
+        setTimeout(()=>{
+            window.addEventListener("devicemotion", this.bindMe);
+        }, 1000);
+    }
+    stopRecording() {
+        window.removeEventListener("devicemotion", this.bindMe);
+    }
+    handleEvent(event) {
+        let a = event.accelerationIncludingGravity;
+        this.addDataPoint({x: a.x, y: a.y, z: a.z, timestamp: Date.now()});
+    }
+}
+window["Accelerometer"] = Accelerometer; // for debugging

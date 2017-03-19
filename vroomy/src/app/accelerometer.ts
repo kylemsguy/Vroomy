@@ -53,7 +53,7 @@ export class Accelerometer
      * Returns data points between start_time and end_time
      * @param start_time: Start UNIX timestamp
      * @param end_time: End UNIX timestamp; defaults to now
-     * @return array of data points
+     * @return Promise to return data
      */
     getDataPoints(start_time: number, end_time: number) 
     {
@@ -61,6 +61,6 @@ export class Accelerometer
             end_time = Math.floor(Date.now() / 1000);
         }
 
-        // TODO finishme
+        return db.getObjectTimestampRange(start_time, end_time);
     }
 }
